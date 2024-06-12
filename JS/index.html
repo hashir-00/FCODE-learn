@@ -5,23 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <p id="id" >
+<body> 
 
+<form  name="form1" onsubmit="return onsubmitt()">
+<input type="submit">
+</form>
+
+     <p id="id" >
     </p> <p id="idd" >
 
-    </p> <p id="iddd" >
-
-    </p>
-    <script language = "javascript" type="text/javascript">
-        document.write("Hello World");
-
+        
+    </p> 
+     <button id='demo'> ss</button>
+    p id="iddd" >
+       
+    </p> 
+     <script language = "javascript" type="text/javascript">
+         function onsubmitt(){
+            alert("hello");
+            return false;
+        }
+       document.write("Hello World");
+        
+      
         //arrays
         let cars = ["kds","sdsd","sdsdsdzxcde"];
         document.getElementById('id').innerHTML= cars;
         document.getElementById('idd').innerHTML= cars[0];
         document.getElementById('iddd').innerHTML= cars.length;
-    </script>
     
+    cars.forEach((item,index,array)=>console.log(item));
+ 
+    document.getElementById('iddd').innerHTML= cars.toString();
+
+    </script> 
+    <script>
+           let student = {
+    name:"hashr",
+    age:"22",
+    height:12
+}
+function message(){
+    alert(student.age +" fff");
+}
+student.message= message;
+document.getElementById('demo').onclick= student.message;
+;
+    </script>
 </body>
 </html>
