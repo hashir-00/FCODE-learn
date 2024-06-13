@@ -1,7 +1,7 @@
 const mongoose= require('mongoose')
 
 var studentSchema = new mongoose.Schema({
-    name:{
+    fullname:{
         type:String,
         required:"this field is required"
     },

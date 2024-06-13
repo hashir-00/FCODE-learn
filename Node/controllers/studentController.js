@@ -19,7 +19,8 @@ router.post('/',(req,res)=>{
 
 function insertRecord(req,res){
     var student = new Student();
-    student.name = req.body.name;
+    student.fullname = req.body.fullname;
+
     student.email = req.body.email;
     student.mobile = req.body.mobile;
     student.city = req.body.city;
@@ -37,6 +38,7 @@ function insertRecord(req,res){
 function updateRecord(req,res){
     Student.findOneAndUpdate
     ({_id:req.body._id},req.body,{new:true},(err,doc)=>{
+        console.log(req.body)
         if(!err){res.redirect('student/list');}
         else{
             
@@ -74,7 +76,7 @@ router.get('/:id',(req,res)=>{
 router.get('/delete/:id',(req,res)=>{
     Student.findByIdAndRemove(req.params.id,(err,doc)=>{
         if(!err){
-            res.render('/student/list');
+            res.redirect('../list');
         }
         else{
             console.log('Error in student delete:'+err);
