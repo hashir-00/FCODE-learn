@@ -1,43 +1,59 @@
 import React, { useEffect, useState } from "react";
 import { useFetchQuestions } from "../hooks/fetchQuestion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateResultAction } from "../redux/resultReducer";
+import { updateResult } from "../hooks/setResults";
 
-const Questions = ({onChecked}) => {
-   const [{ isLoading, apiData, serverError }] = useFetchQuestions();
-  const [data, setData] = useState([]);
-  const state = useSelector((state) => state.questions.trace);
-  const question = data[state];
+const Questions = ({ onChecked }) => {
+  const [{ isLoading, apiData, serverError }] = useFetchQuestions();
+  const result = useSelector((state) => state.result.result);
+
+  const questions = useSelector(
+    (state) => state.questions.queue[state.questions.trace]
+  );
+  const trace = useSelector((state) => state.questions.trace);
+  const dispatch = useDispatch();
+  const [checked, setChecked] = useState(undefined);
+
 
   useEffect(() => {
-    setData(apiData);
-  }, [apiData]);
+    dispatch(updateResultAction({ trace, checked }));
+  }, [apiData, dispatch, trace, checked, questions, result]);
 
   function onSelect(i) {
-    onChecked(i)
+    onChecked(i);
+    setChecked(i);
   }
 
   return (
     <div className="questions">
       <h2 className="text-light">questions</h2>
 
-      <div className="question">
-        <h3>{question?.question}</h3>
-        <div className="options">
-          {question?.options.map((option, index) => (
-            <div key={index} className="option">
-              <input
-                type="radio"
-                name="option"
-                id={option}
-                value={option}
-                onChange={() => onSelect(index)}
-              />
-              <label htmlFor={option}>{option}</label>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ul key={questions?.id}>
+        <li>
+          <h3>{questions?.question}</h3>
+        </li>
+        {questions?.options.map((q, i) => (
+          <li key={i}>
+            <input
+              type="radio"
+              value={false}
+              name="options"
+              id={`q${i}-option`}
+              onChange={() => onSelect(i)}
+            />
+
+            <label className="text-primary" htmlFor={`q${i}-option`}>
+              {q}
+            </label>
+            <div
+              className={`check ${result[trace] == i ? "checked" : ""}`}
+            ></div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 export default Questions;
+

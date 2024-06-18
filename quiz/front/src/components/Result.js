@@ -2,49 +2,70 @@ import React from "react";
 import "../styles/Results.css";
 import { Link } from "react-router-dom";
 import ResultTable from "./ResultTable";
+import { useDispatch, useSelector } from "react-redux";
+import { resetAllAction } from "../redux/questionReducer";
+import { resetResult } from "../redux/resultReducer";
+import {
+  attempts_Number,
+  earnPoints_Number,
+  flag_points,
+} from "../helper/helper";
 
 const Results = () => {
-  function onRestart(){
-    console.log('restart')
+  const result = useSelector((state) => state.result.result);
+  const questionAnswer = useSelector((state) => state.questions.questionAnswer);
+  const dispatch = useDispatch();
 
+  function onRestart() {
+    dispatch(resetAllAction());
+    dispatch(resetResult());
   }
-  
-    return (
+  const attempts = attempts_Number(result);
+  const points = earnPoints_Number(result, questionAnswer);
+  const flag = flag_points(points.earnPoints, points.totalPoints);
+  return (
     <div className="container">
       <h1>Quiz Appli</h1>
       <div>
         <div>
           <span>Username</span>
-         
+
           <span> #</span>
         </div>
         <div>
           <span>results</span>
-         
-          <span> #</span>
+
+          <span>{points.earnPoints}</span>
         </div>
         <div>
           <span>tot questions</span>
-         
+
           <span> #</span>
         </div>
         <div>
           <span>Totl attemps</span>
-         
+
           <span> #</span>
         </div>
         <div>
-          <span>Total earn points</span>
-         
-          <span> #</span>
+          <span>Total points</span>
+
+          <span>{points.totalPoints}</span>
+        </div>
+        <div>
+          <span>{flag ? "passed" : "fail"}</span>
+
+          <span>{points.earnPoints}</span>
         </div>
       </div>
 
       <div>
-        <Link to={'/'} onClick={onRestart}>restart</Link>
+        <Link to={"/"} onClick={onRestart}>
+          restart
+        </Link>
       </div>
       <div>
-        <ResultTable/>
+        <ResultTable />
       </div>
     </div>
   );

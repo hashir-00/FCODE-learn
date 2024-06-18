@@ -5,6 +5,7 @@ import Home from './Main';
 import Quiz from './Quiz';
 import Results from './Result';
 import Questions from './Questions';
+import { CheckUserExist } from '../helper/helper';
 
 function App() {
 
@@ -17,10 +18,10 @@ function App() {
       element: <Questions/>
     }, {
       path:'/Quiz',
-      element: <Quiz/>
+      element:<CheckUserExist><Quiz/></CheckUserExist>
     }, {
       path:'/Results',
-      element: <Results/>
+      element: <CheckUserExist><Results/></CheckUserExist>
     }
 
 

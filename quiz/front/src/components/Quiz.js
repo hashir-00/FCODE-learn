@@ -5,18 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { moveNextQuestion } from "../hooks/fetchQuestion";
 import { movePreviousAction } from "../redux/questionReducer";
 import { PushAnswer } from "../hooks/setResults";
-
+import {Navigate} from 'react-router-dom'
 const Quiz = () => {
   const trace = useSelector((state) => state.questions.trace);
   const queue = useSelector((state) => state.questions.queue);
-  const state = useSelector((state) => state);
+  const result = useSelector((state) => state?.result.result);
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(undefined);
 
-  useEffect(() => {
-    console.log(trace, queue, state);
-    console.log("s");
-  });
+  // useEffect(() => {
+  //   console.log( result);
+   
+  // },[result]);
 
   function onChecked(check) {
     setChecked(check);
@@ -31,22 +31,36 @@ const Quiz = () => {
   const onNext = () => {
     if (trace < queue?.length ) {
       dispatch(moveNextQuestion());
+      
+    }
+    if(result?.length<=trace){
       dispatch(PushAnswer(checked));
     }
   };
+
+  if(result?.length && result?.length >=queue?.length){
+    return <Navigate to={'/Results'} replace={true}> </Navigate>
+  }
+
+
 
   return (
     <div className="container">
       <h1 className="title text-light">Quiz Application</h1>
       <Questions onChecked={onChecked} />
       <div className="grid">
-        <button className="btn prev" onClick={onPrev}>
-          {" "}
+       {trace>0 ? <button className="btn prev" onClick={onPrev}>
           Previous
-        </button>
-        <button className="btn next" onClick={onNext}>
+        </button> :<></>
+        }
+       {trace<queue?.length-1 ? <button className="btn next" onClick={onNext}>
           Next
-        </button>
+        </button> : <></>}
+        {
+          trace===queue?.length-1 ? <button className="btn next" onClick={onNext}>
+          Submit
+        </button> : <></>
+        }
       </div>
     </div>
   );

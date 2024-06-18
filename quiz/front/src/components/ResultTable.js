@@ -13,10 +13,7 @@ const ResultTable = () => {
           </tr>
         </thead>
         <tbody>
-          <td>ss</td>
-          <td>ss</td>
-          <td>ss</td>
-          <td>ss</td>
+        
         </tbody>
       </table>
     </div>

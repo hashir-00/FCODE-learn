@@ -20,8 +20,7 @@ const dispatch= useDispatch()
    
         if (question.length > 0) {
           setData((prev) => ({ ...prev, isLoading: false }));
-          setData((prev) => ({ ...prev, apiData: question }));
-        
+          setData((prev) => ({ ...prev, apiData: question }))
          dispatch(Action.startExamAction(question))
         
         }else{
