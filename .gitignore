@@ -1,3 +1,8 @@
 /Node/node_modules
 /quiz/front/node_modules
 /react-app/node_modules
+/quiz/back/node_modules
+/quiz/back/.env
+
+
+/quiz/front/.env
