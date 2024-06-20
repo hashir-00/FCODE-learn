@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/Main.css";
 import Questions from "./Questions";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,8 @@ import {
   earnPoints_Number,
   flag_points,
 } from "../helper/helper";
+
+
 const Quiz = () => {
   
   const trace = useSelector((state) => state.questions.trace);
