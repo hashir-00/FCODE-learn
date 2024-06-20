@@ -5,7 +5,7 @@ const router= express.Router();
 //questions
 router.get('/questions',getQuestion)
 router.post('/questions',insertQuestion)
-// router.delete('/questions',deleteQuestions)
+router.delete('/questions',deleteQuestions)
 // router.put('/questions',insertQuestion)
 
 //result

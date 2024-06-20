@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Results.css";
 import { Link } from "react-router-dom";
 import ResultTable from "./ResultTable";
@@ -10,24 +10,17 @@ import {
   earnPoints_Number,
   flag_points,
 } from "../helper/helper";
-import { publishResult } from "../hooks/setResults";
+
 
 const Results = () => {
   const result = useSelector((state) => state.result.result);
   const userId = useSelector((state) => state.result.userId);
   const questionAnswer = useSelector((state) => state.questions.questionAnswer);
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.result);
- 
-
   const attempts = attempts_Number(result);
-
-
   const points = earnPoints_Number(result, questionAnswer);
   const flag = flag_points(points.earnPoints, points.totalPoints);
+  const dispatch = useDispatch();
 
-  publishResult({result,userName:userId,attempts,points:points.earnPoints,achieved:flag ? "passed":"fail" })
-  
   function onRestart() {
     dispatch(resetAllAction());
     dispatch(resetResult());
@@ -49,12 +42,12 @@ const Results = () => {
         <div>
           <span>tot questions</span>
 
-          <span> #</span>
+          <span>{result.length}</span>
         </div>
         <div>
           <span>Totl attemps</span>
 
-          <span> #</span>
+          <span> {attempts}</span>
         </div>
         <div>
           <span>Total points</span>
@@ -63,8 +56,6 @@ const Results = () => {
         </div>
         <div>
           <span>{flag ? "passed" : "fail"}</span>
-
-   
         </div>
       </div>
 

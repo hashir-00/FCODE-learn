@@ -1,4 +1,5 @@
-import { postServerData } from "../helper/helper";
+import axios from "axios";
+import { getServerData, postServerData } from "../helper/helper";
 import * as Action from "../redux/resultReducer";
 
 export const PushAnswer = (result) => async (dispatch) => {

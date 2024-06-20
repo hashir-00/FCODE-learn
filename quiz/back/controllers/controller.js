@@ -1,6 +1,7 @@
 const { Questions } = require("../models/questionSchema");
 const { Results } = require("../models/resultSchema");
 const data = require("../database/data");
+
 //questions
 async function getQuestion(req, res) {
   try {
@@ -13,24 +14,21 @@ async function getQuestion(req, res) {
 
 async function insertQuestion(req, res) {
   try {
-    const q = new Questions({
-      question: data.map((q) => q.question),
-      options: data.map((ans) => ans.answerIndex),
-    });
-    await q.save();
-    res.json("inserted");
+  
+ Questions.insertMany(data).then(res.json("inserted")).catch(err=>console.log(err))
+
   } catch (error) {
     res.json(error);
   }
 }
-// async function deleteQuestions(req, res) {
-//   try {
-//     await Questions.deleteMany();
-//     res.json("deleted");
-//   } catch (error) {
-//     res.json(error);
-//   }
-// }
+async function deleteQuestions(req, res) {
+  try {
+    await Questions.deleteMany();
+    res.json("deleted");
+  } catch (error) {
+    res.json(error);
+  }
+}
 // async function updateQuestions(req, res) {
 //   try {
 //     await Questions
@@ -84,7 +82,7 @@ async function deleteResult(req, res) {
 module.exports = {
   getQuestion,
   insertQuestion,
-  // deleteQuestions,
+  deleteQuestions,
   // updateQuestions,
   getAllResult,
   insertResult,
